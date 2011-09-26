@@ -17,6 +17,7 @@ class Quiz1Q2 : public State {
 		vector<State*> generateChildren();
 		bool isGoal();
 		int h();
+		int g();
 		bool equal(State* s);
 };
 
@@ -132,6 +133,11 @@ int Quiz1Q2::h()
 	auto hmap = static_cast<map<string, int>*>(State::getBlob());
 	
 	return hmap->at(this->name);
+}
+
+int Quiz1Q2::g()
+{
+	return -1;
 }
 
 bool Quiz1Q2::equal(State* s)

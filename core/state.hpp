@@ -25,6 +25,7 @@ class State {
         virtual std::vector<State*> generateChildren() = 0;
         virtual bool isGoal() = 0;
         virtual int h() = 0;
+		virtual int g() = 0;
         virtual bool equal(State* s) = 0;
 };
 

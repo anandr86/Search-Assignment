@@ -17,6 +17,7 @@ class Quiz1Q1 : public State {
 		vector<State*> generateChildren();
 		bool isGoal();
 		int h();
+		int g();
 		bool equal(State* s);
 };
 
@@ -109,6 +110,11 @@ bool Quiz1Q1::isGoal()
 }
 
 int Quiz1Q1::h()
+{
+	return -1;
+}
+
+int Quiz1Q1::g()
 {
 	return -1;
 }
