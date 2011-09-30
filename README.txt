@@ -8,4 +8,9 @@ Directories:
 	build	-	dummy directory for building stuff using cmake
 	
 Core
-	Search interface - Search interface
+	search.cpp - Search interface
+	state.cpp  - State interface
+	
+Search
+	dfs.cpp	- DFS implementation
+	best_first.cpp - Best first search implementation
