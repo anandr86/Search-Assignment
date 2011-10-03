@@ -4,12 +4,13 @@
 
 #include <search.hpp>
 #include <state.hpp>
+#include <memory>
 
 class DFS : public Search {
-    public:
-        DFS(State* start);
-        virtual std::vector<State*>* run();
-		virtual void reset();
+public:
+  DFS(spState start);
+  virtual std::shared_ptr<std::vector<spState>> run();
+  virtual void reset();
 };
 
 #endif // __DFS_HPP__

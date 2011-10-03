@@ -2,20 +2,21 @@
 #include <search.hpp>
 #include <state.hpp>
 #include <vector>
+#include <memory>
 
 using namespace std;
 
-Search::Search(State* st) : start(st)
+Search::Search(spState st) : start(st)
 {
 }
 
-vector<State*>* Search::constructPath(State* s)
+shared_ptr<vector<spState>> Search::constructPath(spState s)
 {
-    vector<State*>* path = new vector<State*>();
-    while(s != nullptr) {
-        path->push_back(s);
-        s = s->getParent();
-    }
+  auto path = make_shared<vector<spState>>();
+  while(s != nullptr) {
+    path->push_back(s);
+    s = s->getParent();
+  }
 
-    return path;
+  return path;
 }

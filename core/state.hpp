@@ -4,29 +4,34 @@
 
 #include <string>
 #include <vector>
+#include <memory>
+
+class State;
+
+typedef std::shared_ptr<State> spState;
 
 class State {
-    static void* blob;
-    State* parent;
+  static void* blob;
+  spState parent;
 	
-	protected:
-	    std::string name;
+protected:
+  std::string name;
     
-	public:
-        static void setBlob(void* b);
-        static void* getBlob();
+public:
+  static void setBlob(void* b);
+  static void* getBlob();
 
-        State(std::string name, State* parent = nullptr);
-		void setParent(State* s);
-        State* getParent();
-		virtual std::string repr();
+  State(std::string name);
+  void setParent(spState s);
+  spState getParent();
+  virtual std::string repr();
 
-		virtual State* clone() = 0;
-        virtual std::vector<State*> generateChildren() = 0;
-        virtual bool isGoal() = 0;
-        virtual int h() = 0;
-		virtual int g() = 0;
-        virtual bool equal(State* s) = 0;
+  virtual spState clone() = 0;
+  virtual std::vector<spState> generateChildren() = 0;
+  virtual bool isGoal() = 0;
+  virtual int h() = 0;
+  virtual int g() = 0;
+  virtual bool equal(spState s) = 0;
 };
 
 #endif // __STATE_HPP__

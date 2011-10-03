@@ -3,15 +3,16 @@
 #define __SEARCH_HPP__
 
 #include <state.hpp>
+#include <memory>
 
 class Search {
-	protected:
-		State* const start;
-		std::vector<State*>* constructPath(State* s);
-    public:
-        Search(State* start);
-        virtual std::vector<State*>* run() = 0;
-        virtual void reset() = 0;
+protected:
+  spState const start;
+  std::shared_ptr<std::vector<spState>> constructPath(spState s);
+public:
+  Search(spState start);
+  virtual std::shared_ptr<std::vector<spState>> run() = 0;
+  virtual void reset() = 0;
 };
 
 #endif //__SEARCH_HPP__

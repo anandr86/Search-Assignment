@@ -1,5 +1,6 @@
 
 #include <state.hpp>
+#include <memory>
 #include <string>
 
 using namespace std;
@@ -8,31 +9,30 @@ void* State::blob = nullptr;
 
 void State::setBlob(void* blob)
 {
-    State::blob = blob;
+  State::blob = blob;
 }
 
 void* State::getBlob()
 {
-    return State::blob;
+  return State::blob;
 }
 
-State::State(string name, State* parent)
+State::State(string name)
 {
-    this->name = name;
-    this->parent = parent;
+  this->name = name;
 }
 
-void State::setParent(State* parent)
+void State::setParent(spState parent)
 {
-    this->parent = parent;
+  this->parent = parent;
 }
 
-State* State::getParent()
+spState State::getParent()
 {
-    return this->parent;
+  return this->parent;
 }
 
 string State::repr()
 {
-	return name;
+  return name;
 }

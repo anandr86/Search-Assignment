@@ -6,10 +6,10 @@
 #include <vector>
 
 class BestFirst : public Search {
-	public:
-		BestFirst(State* start);
-		std::vector<State*>* run();
-		void reset();
+public:
+  BestFirst(spState start);
+  std::shared_ptr<std::vector<spState>> run();
+  void reset();
 };
 
 #endif // __BEST_FIRST_HPP__

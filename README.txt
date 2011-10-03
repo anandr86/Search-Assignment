@@ -1,4 +1,9 @@
 
+Changes 03/10/2011
+* Changed interfaces to work with shared_ptr - Fixes memory leak issue
+* Back to working with emacs - indentation changes for all files
+
+
 Search framework
 
 Directories:

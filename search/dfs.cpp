@@ -6,55 +6,61 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include <memory>
 
 using namespace std;
 
-DFS::DFS(State* start) : Search(start)
+DFS::DFS(spState start) : Search(start)
 {
 }
 
-std::vector<State*>* DFS::run()
+shared_ptr<vector<spState>> DFS::run()
 {
-    vector<State*> open;
-    vector<State*> closed;
+  vector<spState> open;
+  vector<spState> closed;
 
-    open.push_back(start->clone());
-    while(!open.empty()) {
-        State* c = open.back();
-		open.pop_back();
-		closed.push_back(c);
+  open.push_back(start->clone());
+  while(!open.empty()) {
+    spState c = open.back();
+    open.pop_back();
+    closed.push_back(c);
 
-        //generate children
-        auto ch = c->generateChildren();
+    //generate children
+    auto ch = c->generateChildren();
 
-        //check for goal condition
-        for(auto i = ch.begin(); i != ch.end(); i++) {
+    for_each(ch.begin(), ch.end(), [&](spState s)
+	     {
+	       s->setParent(c);
+	     });
 
-            //Found goal. Compute path and return
-            if((*i)->isGoal()) {
-                return constructPath(*i); // we are using linked states. No need for closed list
-            }
-        }
+    //check for goal condition
+    for(auto i = ch.begin(); i != ch.end(); i++) {
 
-        //check closed list and prune
-        auto mark = remove_if(ch.begin(), ch.end(), [&](State* s)
-                    {
-                        return find_if(closed.begin(), closed.end(), [&](State* ss) { return ss->equal(s);}) != closed.end();
-                    });
-        ch.erase(mark, ch.end());
-
-        //check open list and prune
-        mark = remove_if(ch.begin(), ch.end(), [&](State* s)
-			   {
-					return find_if(open.begin(), open.end(), [&](State* ss) { return ss->equal(s);}) != open.end();
-			   });
-        ch.erase(mark, ch.end());
-
-        //add children to open list
-        copy(ch.rbegin(), ch.rend(), back_inserter(open));
+      //Found goal. Compute path and return
+      if((*i)->isGoal()) {
+	return constructPath(*i); // we are using linked states. No need for closed list
+      }
     }
+
+    //check closed list and prune
+    auto mark = remove_if(ch.begin(), ch.end(), [&](spState s)
+			  {
+			    return find_if(closed.begin(), closed.end(), [&](spState ss) { return ss->equal(s);}) != closed.end();
+			  });
+    ch.erase(mark, ch.end());
+
+    //check open list and prune
+    mark = remove_if(ch.begin(), ch.end(), [&](spState s)
+		     {
+		       return find_if(open.begin(), open.end(), [&](spState ss) { return ss->equal(s);}) != open.end();
+		     });
+    ch.erase(mark, ch.end());
+
+    //add children to open list
+    copy(ch.rbegin(), ch.rend(), back_inserter(open));
+  }
 	
-	return nullptr;
+  return nullptr;
 }
 
 void DFS::reset()
